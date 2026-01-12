@@ -4,6 +4,11 @@
  */
 
 import swaggerJsdoc from 'swagger-jsdoc';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const options = {
   definition: {
@@ -18,8 +23,10 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Development server',
+        url: process.env.VERCEL_URL 
+          ? `https://${process.env.VERCEL_URL}` 
+          : 'http://localhost:3000',
+        description: process.env.VERCEL_URL ? 'Production server' : 'Development server',
       },
     ],
     tags: [
@@ -266,7 +273,10 @@ const options = {
       },
     },
   },
-  apis: ['./src/routes/*.js'],
+  apis: [
+    join(__dirname, '../routes/couponRoutes.js'),
+    join(__dirname, '../routes/couponApplicationRoutes.js')
+  ],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
