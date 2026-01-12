@@ -1,0 +1,230 @@
+{
+  "info": {
+    "name": "Coupons Management API",
+    "description": "RESTful API to manage and apply different types of discount coupons (cart-wise, product-wise, BxGy) for an e-commerce platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CRUD Operations",
+      "item": [
+        {
+          "name": "Create Cart-wise Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"cart-wise\",\n  \"details\": {\n    \"threshold\": 100,\n    \"discount\": 10,\n    \"discountType\": \"percentage\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coupons",
+              "host": ["{{baseUrl}}"],
+              "path": ["coupons"]
+            }
+          }
+        },
+        {
+          "name": "Create Product-wise Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"product-wise\",\n  \"details\": {\n    \"product_id\": 1,\n    \"discount\": 20,\n    \"discountType\": \"percentage\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coupons",
+              "host": ["{{baseUrl}}"],
+              "path": ["coupons"]
+            }
+          }
+        },
+        {
+          "name": "Create BxGy Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"bxgy\",\n  \"details\": {\n    \"buy_products\": [{\"product_id\": 2, \"quantity\": 3}],\n    \"get_products\": [{\"product_id\": 3, \"quantity\": 1}],\n    \"repetition_limit\": 2\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coupons",
+              "host": ["{{baseUrl}}"],
+              "path": ["coupons"]
+            }
+          }
+        },
+        {
+          "name": "Get All Coupons",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/coupons",
+              "host": ["{{baseUrl}}"],
+              "path": ["coupons"]
+            }
+          }
+        },
+        {
+          "name": "Get Coupon by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/coupons/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["coupons", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Coupon",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"details\": {\n    \"threshold\": 150,\n    \"discount\": 15,\n    \"discountType\": \"percentage\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coupons/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["coupons", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Coupon",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/coupons/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["coupons", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Coupon Application",
+      "item": [
+        {
+          "name": "Get Applicable Coupons",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cart\": {\n    \"items\": [\n      {\"product_id\": 1, \"quantity\": 6, \"price\": 50},\n      {\"product_id\": 2, \"quantity\": 3, \"price\": 30},\n      {\"product_id\": 3, \"quantity\": 2, \"price\": 25}\n    ]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/applicable-coupons",
+              "host": ["{{baseUrl}}"],
+              "path": ["applicable-coupons"]
+            }
+          }
+        },
+        {
+          "name": "Apply Cart-wise Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cart\": {\n    \"items\": [\n      {\"product_id\": 1, \"quantity\": 6, \"price\": 50},\n      {\"product_id\": 2, \"quantity\": 3, \"price\": 30},\n      {\"product_id\": 3, \"quantity\": 2, \"price\": 25}\n    ]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/apply-coupon/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["apply-coupon", "1"]
+            }
+          }
+        },
+        {
+          "name": "Apply Product-wise Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cart\": {\n    \"items\": [\n      {\"product_id\": 1, \"quantity\": 6, \"price\": 50},\n      {\"product_id\": 2, \"quantity\": 3, \"price\": 30}\n    ]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/apply-coupon/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["apply-coupon", "2"]
+            }
+          }
+        },
+        {
+          "name": "Apply BxGy Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cart\": {\n    \"items\": [\n      {\"product_id\": 2, \"quantity\": 6, \"price\": 30},\n      {\"product_id\": 3, \"quantity\": 3, \"price\": 25}\n    ]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/apply-coupon/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["apply-coupon", "3"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
