@@ -135,10 +135,16 @@ const database = {
   },
 
   /**
-   * Seed database with sample coupons
+   * Seed database with sample coupons (only if empty)
    */
   async seed() {
-    await this.clear();
+    // Check if database already has coupons
+    const existingCoupons = await this.getAll();
+    
+    if (existingCoupons.length > 0) {
+      console.log(`Database already has ${existingCoupons.length} coupon(s), skipping seed`);
+      return;
+    }
 
     // Cart-wise coupon: 10% off on carts over 100
     await this.create({
@@ -175,7 +181,7 @@ const database = {
       }
     });
 
-    console.log('Database seeded with sample coupons');
+    console.log('Database seeded with 3 sample coupons');
   },
 
   /**
